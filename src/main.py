@@ -1,3 +1,5 @@
+
+# %% 
 import argparse
 import torch
 import torch.nn as nn
@@ -68,38 +70,29 @@ def test(model, device, test_loader):
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
 
+class Args:
+    batch_size = 64
+    test_batch_size = 1000
+    epochs = 14
+    lr = 1
+    gamma = 0.7
+    no_cuda = False
+    dry_run = False
+    seed = 1
+    log_interval = 10
+    save_model = False
+
 
 def main():
     # Training settings
-    parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
-    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
-                        help='input batch size for training (default: 64)')
-    parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
-                        help='input batch size for testing (default: 1000)')
-    parser.add_argument('--epochs', type=int, default=14, metavar='N',
-                        help='number of epochs to train (default: 14)')
-    parser.add_argument('--lr', type=float, default=1.0, metavar='LR',
-                        help='learning rate (default: 1.0)')
-    parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
-                        help='Learning rate step gamma (default: 0.7)')
-    parser.add_argument('--no-cuda', action='store_true', default=False,
-                        help='disables CUDA training')
-    parser.add_argument('--dry-run', action='store_true', default=False,
-                        help='quickly check a single pass')
-    parser.add_argument('--seed', type=int, default=1, metavar='S',
-                        help='random seed (default: 1)')
-    parser.add_argument('--log-interval', type=int, default=10, metavar='N',
-                        help='how many batches to wait before logging training status')
-    parser.add_argument('--save-model', action='store_true', default=False,
-                        help='For Saving the current Model')
-    args = parser.parse_args()
+    args = Args()
     use_cuda = not args.no_cuda and torch.cuda.is_available()
 
     torch.manual_seed(args.seed)
 
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    kwargs = {'batch_size': args.batch_size}
+    kwargs = {'batch_size': 64}
     if use_cuda:
         kwargs.update({'num_workers': 1,
                        'pin_memory': True,
@@ -130,3 +123,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# %%
