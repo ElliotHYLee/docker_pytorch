@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  pytorch:
+    container_name: pytorch_cnt
+    build: .
+    image: pytorch_img
+    #network_mode: host
+    privileged: true
+    
+    environment:
+      #- DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - "./src:/workspace/src"
+    #   - "/tmp/.X11-unix/:/tmp/.X11-unix/:rw"
+    #   - "$HOME/.Xauthority:/root/.Xauthority:rw"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    command: nvidia-smi
